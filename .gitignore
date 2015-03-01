@@ -1,0 +1,6 @@
+*~
+/Data/Files
+/Runtime
+/verify.php
+/verify_*.php
+/install.lock
