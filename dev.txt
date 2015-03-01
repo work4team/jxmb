@@ -1,2 +1,5 @@
 #开发配置：ubuntu　 ln -s /home/wb/work/x/jxmb/ jxmb
-#jxmb.f3322.net
+1、安装VC_RedistInstaller,xampp-win32-5.5.19-0-VC11-installer,Git-1.9.5-preview20141217
+2、配置密码：http://localhost/security/index.php
+3、管理数据库：http://localhost/phpmyadmin/
+4、应用首页：http://120.24.157.9/jxmb/
