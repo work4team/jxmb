@@ -1,9 +1,16 @@
 # jxmb
 
+1、开启邮件拓展
+修改文件： "\xampp\php\php.ini"
+取消注释：";extension=php_imap.dll". 为: extension=php_imap.dll
 
-    Where is the IMAP support for PHP?
+2、映射开发虚拟目录
+ 修改文件：xampp\apache\conf\extra\httpd-vhosts.conf
+ 追加：
+ Alias /jxmb "G:/x/jxmb"
 
-    As default, the IMAP support for PHP is deactivated in XAMPP, because there were some mysterious initialization errors with some home versions like Windows 98. Who works with NT systems, can open the file "\xampp\php\php.ini" to active the php exstension by removing the beginning semicolon at the line ";extension=php_imap.dll". Should be: extension=php_imap.dll
-
-    Now restart Apache and IMAP should work. You can use the same steps for every extension, which is not enabled in the default configuration.
-
+ <Directory "G:/x/jxmb">
+     Options Indexes FollowSymLinks Includes ExecCGI
+     AllowOverride All
+     Require all granted
+ </Directory>

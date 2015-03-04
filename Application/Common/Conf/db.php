@@ -5,7 +5,7 @@ return array(
         'DB_HOST'=>'localhost',
         'DB_NAME'=>'jxmb',
         'DB_USER'=>'root',
-        'DB_PWD'=>'wb641218',
+        'DB_PWD'=>'641218',
         'DB_PORT'=>'3306',
         'DB_PREFIX'=>'jxmb_',
     );
