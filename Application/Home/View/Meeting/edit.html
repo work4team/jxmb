@@ -113,9 +113,13 @@
                 $("#join_user_id").val($("#join_user_id").val() + $(this).attr("data") + ",");
             });
 
-            $("#holder_id").val("");
+
             $("#single_user span.address_list span").each(function() {
-                $("#holder_id").val($(this).attr("data"));
+                valx = trim($(this).attr("data"));
+                if(valx.length > 0){
+                    $("#holder_id").val("");
+                    $("#holder_id").val(valx);
+                }
             });
             $("#single_user span.address_list span").each(function() {
                 $("#holder").val($(this).text().replace(';', '') );
