@@ -5,3 +5,5 @@
 /verify_*.php
 /install.lock
 /dev.txt
+/Application/Internal
+/Application/TPH
