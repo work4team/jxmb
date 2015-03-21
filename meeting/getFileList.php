@@ -1,18 +1,16 @@
 <?php
-/*********************/
-/*                   */
-/*  Version : 5.1.0  */
-/*  Author  : RM     */
-/*  Comment : 071223 */
-/*                   */
-/*********************/
 
-header( "Content-Type:text/xml;charset=UTF-8" );
-header( "Cache-Control: no-store, no-cache, must-revalidate" );
-header( "Cache-Control: post-check=0, pre-check=0", false );
-$debug = true;
-require_once( "../inc/inc.php" );
 $roomID = mysql_real_escape_string( trim( $_GET['roomID'] ) );
+//$client = new HttpClient('example.com');
+//$client->post('/login.php', array(
+//    'username' => 'Simon',
+//    'password' => 'ducks'
+//));
+//if (!$client->get('/private.php')) {
+//    die('An error occurred: '.$client->getError());
+//}
+//$pageContents = $client->getContent();
+
 $sql = "select * from attachment where meet_no='".$roomID."' and model_type='FILESHARE'";
 $xml = "<FileList>";
 $rs = api_sql_query( $sql, __FILE__, 14 );
