@@ -52,15 +52,21 @@ if (isset($_POST["install"])) {
 				$line = trim($line);
 				if ($line != "") {
 					if (!($line{0} == "#" || $line{0} . $line{1} == "--")) {
-						$sqlstr .= $line;
+                        $sqlstr .= $line;
 					}
 				}
 			}
 			$sqlstr = rtrim($sqlstr, ";");
 			$sqls = explode(";", $sqlstr);
+            $valpre="";
 			foreach ($sqls as $val) {
-				$val = str_replace("`think_", "`" . $db_tag, $val);
-				mysql_query($val);
+				$val = $valpre . str_replace("`think_", "`" . $db_tag, $val);
+				$res = mysql_query($val);
+                if(!$res && (strpos($val, "INSERT") !== false)){
+                    $valpre = $val . ';';
+                }else{
+                    $valpre="";
+                }
 			}
 
 			rename("install.php", "install.lock");
