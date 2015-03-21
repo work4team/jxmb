@@ -6,7 +6,7 @@ return array(
 	'MULTI_MODULE' => true, // 单模块访问
 	'DEFAULT_MODULE' => 'Home', // 默认访问模块    
     'DEFAULT_FILTER' => '',
-    'MODULE_ALLOW_LIST'  => array('Home','Weixin','App'),
+    'MODULE_ALLOW_LIST'  => array('Home','Weixin','App', 'TPH', 'Internal'),
      
     /* URL配置 */
     'URL_CASE_INSENSITIVE' => true, //默认false 表示URL区分大小写 true则表示不区分大小写
@@ -18,7 +18,7 @@ return array(
 	'TOKEN_ON'=>false, 
 	'TMPL_STRIP_SPACE'=>false,
 	'URL_HTML_SUFFIX' => '',
-	'DB_FIELDS_CACHE'=>false,
+	//'DB_FIELDS_CACHE'=>false, //数据表字段缓存
     'SESSION_AUTO_START'=>true,
     
     'USER_AUTH_KEY'	=>'auth_id',	// 用户认证SESSION标记
@@ -32,5 +32,7 @@ return array(
     'USER_AUTH_KEY'	=>'auth_id',
 	'USER_AUTH_GATEWAY'=>'public/login',
     /* 系统数据加密设置 */
-    'DATA_AUTH_KEY' => '1*NX+Jds|p!IFqltgD)"?4;ic<{,wuya239Ax^]-', //默认数据加密KEY        
+    'DATA_AUTH_KEY' => '1*NX+Jds|p!IFqltgD)"?4;ic<{,wuya239Ax^]-', //默认数据加密KEY
+
+    'mediaServer' => 'rtmp://localhost',
 );

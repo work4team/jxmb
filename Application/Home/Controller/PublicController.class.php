@@ -47,6 +47,7 @@ class PublicController extends Controller {
 			session(C('USER_AUTH_KEY'), $auth_info['id']);
 			session('emp_no', $auth_info['emp_no']);
 			session('user_name', $auth_info['name']);
+            session('user_password', $auth_info['password']);
 			session('user_pic', $auth_info['pic']);
 			session('dept_id', $auth_info['dept_id']);
 

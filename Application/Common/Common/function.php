@@ -169,17 +169,6 @@ function badge_count_todo() {
 	return $new_todo_count;
 }
 
-function badge_count_schedule() {
-	$where = array();
-	$user_id = get_user_id();
-	$where['user_id'] = $user_id;
-	$where['is_del'] = 0;
-	$where['start_time'] = array("elt", date("Y-m-d"));
-	$where['end_time'] = array("egt", date("Y-m-d"));
-	$new_schedule_count = M("Schedule") -> where($where) -> count();
-	return $new_schedule_count;
-}
-
 function badge_count_message() {
 	//获取最新消息
 	$model = M("Message");
@@ -212,11 +201,9 @@ function badge_count_info($id) {
 	$model = D("InfoView");
 	$info_list = $model -> where($map) -> getField('id', true);
 	
-	$readed_info = M("UserConfig") -> where("id=$user_id") -> getField('readed_info');
-	$readed_info = array_filter(explode(',', $readed_info));
 
 	if (!empty($info_list)) {
-		$un_read_doc = array_diff($info_list, $readed_info);
+		$un_read_doc = $info_list;
 	} else {
 		$un_read_doc = array();
 	}
@@ -466,15 +453,7 @@ function get_system_config($code) {
 }
 
 function get_user_config($field) {
-	$model = M("UserConfig");
-	$user_id = get_user_id();
-	$where['id'] = array('eq', $user_id);
-	$result = $model -> where($where) -> getfield($field);
-	if (empty($result)) {
-		return get_system_config(strtoupper($field));
-	} else {
-		return $result;
-	}
+	return get_system_config(strtoupper($field));
 }
 
 function get_user_info($id, $field) {
@@ -530,7 +509,10 @@ function get_user_name() {
 	$user_name = session('user_name');
 	return isset($user_name) ? $user_name : 0;
 }
-
+function get_user_password() {
+    $user_password = session('user_password');
+    return isset($user_password) ? $user_password : 0;
+}
 function get_dept_id() {
 	return session('dept_id');
 }

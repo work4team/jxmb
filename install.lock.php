@@ -46,7 +46,7 @@ if (isset($_POST["install"])) {
 		} else {
 			mysql_select_db($db_dbname);
 			mysql_query("set names 'utf8'");
-			$lines = file("Data/Sql/demo.sql");
+			$lines = file("Data/Sql/inidata.sql");
 			$sqlstr = "";
 			foreach ($lines as $line) {
 				$line = trim($line);

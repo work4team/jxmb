@@ -48,114 +48,30 @@
 							</div>
 						</div>
 					</div>
-					<!-- 日程开始 -->
-					<div class="widget-box" sort="12">
-						<div class="widget-header">
-							<h5 class="smaller">日程</h5>
-							<div class="widget-toolbar no-border">
-								<ul class="nav nav-tabs" id="myTab">
-									<li class="active">
-										<a data-toggle="tab" href="#calendar-todo">待办</a>
-									</li>									
-									<li >
-										<a data-toggle="tab" href="#calendar-schedule">日程</a>
-									</li>
 
-								</ul>
-							</div>
-						</div>
-						<div class="widget-body">
-							<div class="widget-main">
-								<div class="tab-content">
-									<div id="calendar-schedule" class=" ul_table tab-pane ">
-										<ul>
-											<volist name="schedule_list" id="vo">
-												<li>
-													<span class="pull-right hidden-xs">{$vo.start_time|substr=0,10}</span>
-													<span  class="auto autocut"> <a url="{:U('schedule/read2','id='.$vo['id'])}" node="198" return_url="{:U('schedule/index')}" onclick="click_home_list(this)">{$vo.name}</a></span>
-												</li>
-											</volist>
-										</ul>
-									</div>
-									<div id="calendar-todo" class=" ul_table active tab-pane">
-										<ul>
-											<volist name="todo_list" id="vo">
-												<li>
-													<span class="pull-right hidden-xs">{$vo.end_date}</span>
-													<span  class="auto autocut"> <a url="{:U('todo/edit','id='.$vo['id'])}" node="198" return_url="{:U('todo/index')}" onclick="click_home_list(this)">{$vo.name}</a> </span>
-												</li>
-											</volist>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<!-- 公告开始 -->
-					<div class="widget-box" sort="13">
-						<div class="widget-header">
-							<h5 class="smaller">信息</h5>
-						</div>
-						<div class="widget-body">
-							<div class="ul_table widget-main">
-								<ul>
-									<volist name="info_list" id="vo">
-										<li>
-											<span class="pull-right hidden-xs">{$vo.create_time|to_date='Y-m-d '}</span>
-											<span  class="auto autocut"><a url="{:U('info/read','id='.$vo['id'])}" node="88" return_url="{:U('info/index')}" onclick="click_home_list(this)">【{$vo.folder_name}】{$vo.name}</a> </span>
-										</li>
-									</volist>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
+                    <!-- 公告开始 -->
+                    <div class="widget-box" sort="21">
+                        <div class="widget-header">
+                            <h5 class="smaller">信息</h5>
+                        </div>
+                        <div class="widget-body">
+                            <div class="ul_table widget-main">
+                                <ul>
+                                    <volist name="info_list" id="vo">
+                                        <li>
+                                            <span class="pull-right hidden-xs">{$vo.create_time|to_date='Y-m-d '}</span>
+                                            <span  class="auto autocut"><a url="{:U('info/read','id='.$vo['id'])}" node="88" return_url="{:U('info/index')}" onclick="click_home_list(this)">【{$vo.folder_name}】{$vo.name}</a> </span>
+                                        </li>
+                                    </volist>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 				<div class="col-xs-12 col-sm-6 widget-container-span" id="t2">
 					<div class="widget-box display-none" ></div>
-					<!-- 审批开始 -->
-					<div class="widget-box" sort="21">
-						<div class="widget-header">
-							<h5 class="smaller">审批</h5>
-							<div class="widget-toolbar no-border">
-								<ul class="nav nav-tabs" id="myTab">
-									<li class="active">
-										<a data-toggle="tab" href="#flow-todo">待办</a>
-									</li>
-									<li>
-										<a data-toggle="tab" href="#flow-submit">已提交</a>
-									</li>
-								</ul>
-							</div>
-						</div>
 
-						<div class="widget-body">
-							<div class="widget-main">
-								<div class="tab-content">
-									<div id="flow-todo" class="tab-pane in active ul_table">
-										<ul>
-											<volist name="todo_flow_list" id="vo">
-												<li>
-													<span class="pull-right hidden-xs">{$vo.create_time|to_date='Y-m-d'}</span>
-													<span  class="auto autocut"> <a url="{:U('flow/read','id='.$vo['id'].'&fid=confirm')}" node="87" return_url="{:U('flow/folder','fid=confirm')}" onclick="click_home_list(this)">{$vo.name}</a> </span>
-												</li>
-											</volist>
-										</ul>
-									</div>
-									<div id="flow-submit" class="tab-pane ul_table">
-										<ul>
-											<volist name="submit_flow_list" id="vo">
-												<li>
-													<span class="pull-right hidden-xs">{$vo.create_time|to_date='Y-m-d'}</span>
-													<span  class="auto autocut"> <a href="{:U('flow/read','id='.$vo['id'].'&fid='.$vo['fid'].'&fid=submit')}" node="87" return_url="{:U('flow/folder','fid=submit')}" onclick="click_home_list(this)">{$vo.name}</a> </span>
-												</li>
-											</volist>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+
 				</div>
 			</div>
 		</div>
@@ -187,7 +103,7 @@
 					tolerance : 'pointer'
 				});
 			}
-			init_sort("{$home_sort}");
+			init_sort("");
 		});
 
 		function init_sort(sort_string) {

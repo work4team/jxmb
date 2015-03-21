@@ -338,11 +338,8 @@ class InfoController extends HomeController {
 		$model = D("InfoView");
 		$info_list = $model -> where($map) -> getField('id', true);
 
-		$readed_info = M("UserConfig") -> where("id=$user_id") -> getField('readed_info');
-		$readed_info = array_filter(explode(',', $readed_info));
-
 		if (!empty($info_list)) {
-			$un_read_doc = array_diff($info_list, $readed_info);
+			$un_read_doc = $info_list;
 		} else {
 			$un_read_doc = array();
 		}
@@ -364,9 +361,6 @@ class InfoController extends HomeController {
 		$readed_info = implode(",", $readed_info);
 
 		$where_config['id'] = array('eq', $user_id);
-		if (!empty($readed_info)) {
-			M("UserConfig") -> where($where_config) -> setField('readed_info', $readed_info);
-		}
 	}
 
 }

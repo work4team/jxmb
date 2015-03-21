@@ -24,12 +24,7 @@ class IndexController extends HomeController {
 		cookie("current_node", null);
 		cookie("top_menu", null);
 
-		$config = D("UserConfig") -> get_config();
-		$this -> assign("home_sort", $config['home_sort']);
-
 		$this -> _mail_list();
-		$this -> _flow_list();
-		$this -> _schedule_list();
 		$this -> _info_list();
 
 		$this -> display();
@@ -38,7 +33,6 @@ class IndexController extends HomeController {
 	public function set_sort() {
 		$val = I('val');
 		$data['home_sort'] = $val;
-		$model = D("UserConfig") -> set_config($data);
 	}
 
 	protected function _mail_list() {
@@ -59,34 +53,6 @@ class IndexController extends HomeController {
 		$this -> assign('unread_mail_list', $unread_mail_list);
 	}
 
-	protected function _flow_list() {
-		$user_id = get_user_id();
-		$emp_no = get_emp_no();
-		$model = D('Flow');
-		//带审批的列表
-		$FlowLog = M("FlowLog");
-		$where['emp_no'] = $emp_no;
-		$where['_string'] = "result is null";
-		$log_list = $FlowLog -> where($where) -> field('flow_id') -> select();
-		$log_list = rotate($log_list);
-
-		if (!empty($log_list)) {
-			$map['id'] = array('in', $log_list['flow_id']);
-		} else {
-			$map['_string'] = '1=2';
-		}
-		$todo_flow_list = $model -> where($map) -> field("id,name,create_time") -> limit(6) -> order("create_time desc") -> select();
-		$this -> assign("todo_flow_list", $todo_flow_list);
-
-		//已提交
-		$map = array();
-		$map['user_id'] = $user_id;
-		$map['step'] = array('gt', 10);
-
-		$submit_flow_list = $model -> where($map) -> field("id,name,create_time") -> limit(6) -> order("create_time desc") -> select();
-
-		$this -> assign("submit_flow_list", $submit_flow_list);
-	}
 
 	protected function _info_list() {
 		$user_id = get_user_id();
@@ -114,24 +80,6 @@ class IndexController extends HomeController {
 
 		$info_list = $model -> where($map) -> field("id,name,create_time,folder_name") -> order("create_time desc") -> limit(10) -> select();
 		$this -> assign("info_list", $info_list);
-	}
-
-	protected function _schedule_list() {
-		$user_id = get_user_id();
-		$model = M('Schedule');
-		//获取最新邮件
-		$start_date = date("Y-m-d");
-		$where['user_id'] = $user_id;
-		$where['start_time'] = array('egt', $start_date);
-		$schedule_list = M("Schedule") -> where($where) -> order('start_time,priority desc') -> limit(10) -> select();
-		$this -> assign("schedule_list", $schedule_list);
-
-		$model = M("Todo");
-		$where = array();
-		$where['user_id'] = $user_id;
-		$where['status'] = array("in", "1,2");
-		$todo_list = M("Todo") -> where($where) -> order('priority desc,sort asc') -> limit(10) -> select();
-		$this -> assign("todo_list", $todo_list);
 	}
 
 }

@@ -94,7 +94,6 @@ class UserController extends HomeController {
 			$model ->password=md5($model ->emp_no.$model->emp_no);
 			if ($result = $model -> add()){
 				$data['id']=$result;
-				M("UserConfig")->add($data);
 				$this -> assign('jumpUrl', get_return_url());
 				$this -> success('用户添加成功！');
 			} else {

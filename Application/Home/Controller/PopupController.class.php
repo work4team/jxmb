@@ -161,6 +161,10 @@ class PopupController extends HomeController {
 		$this -> auth();
 	}
 
+    function selectsingleuser() {
+        $this->actor();
+    }
+
 	function avatar() {
 		$id = I('id');
 		$this -> assign("id", $id);

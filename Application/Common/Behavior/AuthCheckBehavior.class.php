@@ -2,6 +2,8 @@
 
 namespace Common\Behavior;
 use Think\Behavior;
+use Think\Think;
+use Think\Log;
 
 defined('THINK_PATH') or exit();
 
@@ -10,7 +12,7 @@ class AuthCheckBehavior extends Behavior {
 	public function run(&$params) {
 		//个人数据
 		$app_type = $params['app_type'];
-
+        //Log::record( 'app_type:' . $app_type);
 		switch($app_type) {
 			case 'public' :
 				$auth = array('admin' => false, 'write' => false, 'read' => true);

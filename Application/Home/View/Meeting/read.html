@@ -1,0 +1,110 @@
+<extend name="Layout/page_detail" />
+<block name="content">
+	<input type="hidden" id="id" name="id" value="{$vo.id}">
+	{:W('PageHeader/simple',array('name'=>$vo['name'],'search'=>'N'))}
+	<div class="operate panel panel-default">
+		<div class="panel-body">
+			<div class="pull-left">
+				<a onclick="go_return_url();" class="btn btn-sm btn-primary">返回</a>
+				<a onclick="del();" class="btn btn-sm btn-danger">删除</a>
+			</div>
+			<div class="pull-right">
+				<a onclick="edit();" class="btn btn-sm btn-primary">修改</a>
+			</div>
+		</div>
+	</div>
+	<form method='post' id="frm_content" name="frm_content" enctype="multipart/form-data"  class="well form-horizontal">
+		<input type="hidden" id="id" name="id" value="{$vo.id}">
+		<div class="form-group col-sm-6">
+			<label class="col-sm-4 control-label">会议编号：</label>
+			<div class="col-sm-8">
+				<p class="form-control-static">
+					{$vo.meet_no}
+				</p>
+			</div>
+		</div>
+        <div class="form-group col-sm-6">
+            <label class="col-sm-4 control-label">会议名称：</label>
+            <div class="col-sm-8">
+                <p class="form-control-static">
+                    {$vo.meet_name}
+                </p>
+            </div>
+        </div>
+		<div class="form-group col-sm-6">
+			<label class="col-sm-4 control-label" >开始时间：</label>
+			<div class="col-sm-8">
+				<p class="form-control-static">
+					{$vo.start_time|substr=0,16}
+				</p>
+			</div>
+		</div>
+        <div class="form-group col-sm-6">
+            <label class="col-sm-4 control-label" >结束时间：</label>
+            <div class="col-sm-8">
+                <p class="form-control-static">
+                    {$vo.end_time|substr=0,16}
+                </p>
+            </div>
+        </div>
+		<div class="form-group col-sm-6">
+			<label class="col-sm-4 control-label" >主持人：</label>
+			<div class="col-sm-8">
+				<p class="form-control-static">
+					{$vo.holder}
+				</p>
+			</div>
+		</div>
+        <div class="form-group col-sm-6">
+            <label class="col-sm-4 control-label" >会议类型：</label>
+            <div class="col-sm-8">
+                <select name="meet_type_id" id="meet_type_id" class="form-control" value="{$vo.meet_type_id}"  disabled="disabled" msg="请选择类型" check="require">
+                    {:fill_option($meet_type_list)}
+                </select>
+            </div>
+        </div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label" >参会人员：</label>
+			<div class="col-sm-10">
+				<p class="form-control-static">
+					{$vo.join_user_name}
+				</p>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<div class="form-group">
+			<div class="col-xs-12">
+				<div class="content_wrap" >
+					<iframe class="content_iframe"></iframe>
+					<textarea  class="editor content" name="subject" style="width:100%;display:none">{$vo.subject}</textarea>
+				</div>
+			</div>
+		</div>
+	</form>
+</block>
+<block name="js">
+	<script type="text/javascript">
+		$(function() {
+			show_content();
+		});
+
+		function del() {
+			ui_confirm('确定要删除吗?', function() {
+				sendAjax("{:U('mark','action=del')}", 'id=' + $("#id").val(), function(data) {
+					if (data.status) {
+						ui_alert(data.info, function() {
+							go_return_url();
+						});
+					}
+				});
+			});
+		}
+
+		function edit() {
+			window.open(fix_url("{:U('edit')}?id=" + $("#id").val()), "_self");
+		}
+        $(document).ready(function() {
+            set_val('meet_type_id',"{$vo.meet_type_id}");
+        });
+	</script>
+</block>
