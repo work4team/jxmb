@@ -80,9 +80,20 @@ class MeetingController extends HomeController {
         $user_name = get_user_name();
         $user_password = get_user_password();
 
+        $model = D('Meeting');
         $m_role = '4';
         if($holder_id == $user_id){
             $m_role = '2';
+        }else{
+            $sql = "SELECT `" . $model -> get_tablePrefix() . "meeting_user`.`mrole` FROM `" . $model -> get_tablePrefix() . "meeting_user`,`" . $model -> get_tablePrefix() . "meeting`";
+            $sql .= "where `" . $model -> get_tablePrefix() . "meeting_user`.`user_id` = 43 and `" . $model -> get_tablePrefix() . "meeting_user`.`mrole` = 3 and `" . $model -> get_tablePrefix() . "meeting_user`.`meeting_id` = `" . $model -> get_tablePrefix() . "meeting`.`id`";
+            $sql .= " and `" . $model -> get_tablePrefix() . "meeting`.`meet_no`= '" . $room_no . "'";
+            $res = $model-> db() ->query($sql);
+            if (false == $res || count($res) == 0) {
+                $m_role = '4';
+            }else{
+                $m_role = '3';
+            }
         }
         //通过cookie共享连接字符串。
         $chatconnStr = 'userName=' . $user_emp_no . '&realName=' . $user_name .'&password=' . $user_password . '&mediaServer=' . C("mediaServer");
@@ -120,7 +131,9 @@ class MeetingController extends HomeController {
         $model = D('Meeting');
 
         if (!empty($scope_list)) {
-            $map['_string'] .= " " . $model -> get_tablePrefix()  . "meeting.id in ($scope_list)";
+            $map['_string'] .= " " . $model -> get_tablePrefix()  . "meeting.id in ($scope_list) or " . $model -> get_tablePrefix() . "meeting.holder_id ='$user_id'";
+        }else{
+            $map['_string'] .= " " . $model -> get_tablePrefix()  . "meeting.holder_id ='$user_id'";
         }
 
         if (!empty($model)) {

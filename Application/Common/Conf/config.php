@@ -33,6 +33,4 @@ return array(
 	'USER_AUTH_GATEWAY'=>'public/login',
     /* 系统数据加密设置 */
     'DATA_AUTH_KEY' => '1*NX+Jds|p!IFqltgD)"?4;ic<{,wuya239Ax^]-', //默认数据加密KEY
-
-    'mediaServer' => 'rtmp://localhost',
 );

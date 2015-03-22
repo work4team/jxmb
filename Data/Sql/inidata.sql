@@ -90,6 +90,29 @@ INSERT INTO `think_dept_grade` VALUES (18,'DG2','第二级','2',0);
 UNLOCK TABLES;
 
 #
+# Table structure for table think_doc
+#
+
+DROP TABLE IF EXISTS `think_doc`;
+CREATE TABLE `think_doc` (
+  `id` smallint(4) unsigned NOT NULL AUTO_INCREMENT,
+  `doc_no` varchar(20) NOT NULL DEFAULT '' COMMENT '文档编号',
+  `name` varchar(50) NOT NULL DEFAULT '' COMMENT '名称',
+  `content` text NOT NULL COMMENT '内容',
+  `folder` int(11) NOT NULL DEFAULT '0' COMMENT '文件夹',
+  `add_file` varchar(200) NOT NULL DEFAULT '' COMMENT '附件',
+  `user_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户ID',
+  `user_name` varchar(20) NOT NULL DEFAULT '' COMMENT '用户名称',
+  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `is_del` tinyint(3) NOT NULL DEFAULT '0' COMMENT '删除标记',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8;
+INSERT INTO `think_doc` VALUES (91,'2015-0001','学习材料','学习材料',2,'MDAwMDAwMDAwMIO3h3M;',1,'管理员',1426999909,0,0);
+/*!40000 ALTER TABLE `think_doc` ENABLE KEYS */;
+UNLOCK TABLES;
+
+#
 # Table structure for table think_duty
 #
 
@@ -109,6 +132,31 @@ INSERT INTO `think_duty` VALUES (16,'W001','文员','',0,'');
 INSERT INTO `think_duty` VALUES (17,'TASK_ASSIGN','任务分配','',0,'');
 INSERT INTO `think_duty` VALUES (18,'SHOW_LOG','日志查看','',0,'');
 /*!40000 ALTER TABLE `think_duty` ENABLE KEYS */;
+UNLOCK TABLES;
+
+#
+# Table structure for table think_file
+#
+
+DROP TABLE IF EXISTS `think_file`;
+CREATE TABLE `think_file` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '文件ID',
+  `name` char(30) NOT NULL DEFAULT '' COMMENT '原始文件名',
+  `savename` char(20) NOT NULL DEFAULT '' COMMENT '保存名称',
+  `savepath` char(30) NOT NULL DEFAULT '' COMMENT '文件保存路径',
+  `ext` char(5) NOT NULL DEFAULT '' COMMENT '文件后缀',
+  `mime` char(40) NOT NULL DEFAULT '' COMMENT '文件mime类型',
+  `size` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '文件大小',
+  `md5` char(32) NOT NULL DEFAULT '' COMMENT '文件md5',
+  `sha1` char(40) NOT NULL DEFAULT '' COMMENT '文件 sha1编码',
+  `location` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '文件保存位置',
+  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '远程地址',
+  `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '上传时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_md5` (`md5`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='文件表';
+INSERT INTO `think_file` VALUES (14,'hosts','550e3e3228ffb.','info/2015-03/','','application/octet-stream',1290,'158ac818d8a06a0d04fd12a1f303dff8','c63027917a32bbf9b936f003710eeda4f924be10',0,'',1426996785);
+/*!40000 ALTER TABLE `think_file` ENABLE KEYS */;
 UNLOCK TABLES;
 
 #
@@ -135,7 +183,10 @@ CREATE TABLE `think_info` (
   `update_time` int(11) NOT NULL,
   `is_del` tinyint(3) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+INSERT INTO `think_info` VALUES (1,'2015-0001','司令员','sds',1,0,1,'43,','民兵A/无职位|43;','',1,'管理员',1,'江西省军区',1426995827,0,1);
+INSERT INTO `think_info` VALUES (2,'2015-0002','assa','ds',1,0,1,'','','MDAwMDAwMDAwMIO3h3M;',1,'管理员',1,'江西省军区',1426996793,0,1);
+INSERT INTO `think_info` VALUES (3,'2015-0003','最新通知.','最新通知.',1,0,1,'1,43,49,','管理员/训练参谋|1;民兵A/无职位|43;民兵B/无职位|49;','MDAwMDAwMDAwMIO3h3M;',1,'管理员',1,'江西省军区',1426999104,0,0);
 /*!40000 ALTER TABLE `think_info` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -210,6 +261,10 @@ INSERT INTO `think_info_scope` VALUES (124,62);
 INSERT INTO `think_info_scope` VALUES (124,1);
 INSERT INTO `think_info_scope` VALUES (124,65);
 INSERT INTO `think_info_scope` VALUES (124,66);
+INSERT INTO `think_info_scope` VALUES (1,43);
+INSERT INTO `think_info_scope` VALUES (3,1);
+INSERT INTO `think_info_scope` VALUES (3,43);
+INSERT INTO `think_info_scope` VALUES (3,49);
 /*!40000 ALTER TABLE `think_info_scope` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -328,7 +383,7 @@ CREATE TABLE `think_meet_attachment` (
   `file_type` char(10) DEFAULT NULL,
   `model_type` enum('FILESHARE','PRESENTATION') DEFAULT 'FILESHARE',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40000 ALTER TABLE `think_meet_attachment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -365,6 +420,8 @@ CREATE TABLE `think_meeting` (
   `holder_id` int(11) DEFAULT NULL,
   `holder` varchar(100) DEFAULT NULL,
   `subject` varchar(5000) DEFAULT NULL,
+  `speak_user_id` text,
+  `speak_user_name` text,
   `join_user_id` text,
   `join_user_name` text,
   `start_time` datetime DEFAULT NULL,
@@ -374,9 +431,9 @@ CREATE TABLE `think_meeting` (
   `status` int(11) DEFAULT '0',
   `summary` varchar(5000) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
-INSERT INTO `think_meeting` VALUES (22,'CS','测试会议',NULL,NULL,43,'民兵A/无职位','硕士','43,49,','民兵A/无职位|43;民兵B/无职位|49;','2015-02-24 17:10:00','2015-03-12 17:10:00',NULL,0,0,NULL);
-INSERT INTO `think_meeting` VALUES (23,'CS','测试会议',8,NULL,0,'民兵A/无职位','但是大多数','1,43,49,','管理员/训练参谋|1;民兵A/无职位|43;民兵B/无职位|49;','2015-02-24 17:50:00','2015-03-11 02:50:00',NULL,0,0,NULL);
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+INSERT INTO `think_meeting` VALUES (24,'dhGErY','测试会议',8,NULL,1,'管理员/训练参谋','测试会议','43,48,','民兵A/无职位|43;团长/训练参谋|48;','43,49,','民兵A/无职位|43;民兵B/无职位|49;','2015-03-19 21:50:00','2015-03-26 21:50:00',NULL,0,0,NULL);
+INSERT INTO `think_meeting` VALUES (27,'UEOCem','测试会议',7,NULL,48,'团长/训练参谋','测试会议B.','43,1,','民兵A/无职位|43;管理员/训练参谋|1;','43,49,','民兵A/无职位|43;民兵B/无职位|49;','2015-03-05 14:50:00','2015-03-03 14:50:00',NULL,0,0,NULL);
 /*!40000 ALTER TABLE `think_meeting` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -391,12 +448,20 @@ CREATE TABLE `think_meeting_user` (
   `user_id` int(11) DEFAULT NULL,
   `mrole` tinyint(3) unsigned DEFAULT '4',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=187 DEFAULT CHARSET=utf8;
-INSERT INTO `think_meeting_user` VALUES (178,22,43,4);
-INSERT INTO `think_meeting_user` VALUES (179,22,49,4);
-INSERT INTO `think_meeting_user` VALUES (184,23,1,4);
-INSERT INTO `think_meeting_user` VALUES (185,23,43,4);
-INSERT INTO `think_meeting_user` VALUES (186,23,49,4);
+) ENGINE=InnoDB AUTO_INCREMENT=260 DEFAULT CHARSET=utf8;
+INSERT INTO `think_meeting_user` VALUES (241,25,49,4);
+INSERT INTO `think_meeting_user` VALUES (242,26,43,4);
+INSERT INTO `think_meeting_user` VALUES (243,26,49,4);
+INSERT INTO `think_meeting_user` VALUES (245,26,48,3);
+INSERT INTO `think_meeting_user` VALUES (246,26,43,3);
+INSERT INTO `think_meeting_user` VALUES (248,24,43,4);
+INSERT INTO `think_meeting_user` VALUES (249,24,49,4);
+INSERT INTO `think_meeting_user` VALUES (251,24,48,3);
+INSERT INTO `think_meeting_user` VALUES (252,24,43,3);
+INSERT INTO `think_meeting_user` VALUES (254,27,43,4);
+INSERT INTO `think_meeting_user` VALUES (255,27,49,4);
+INSERT INTO `think_meeting_user` VALUES (257,27,1,3);
+INSERT INTO `think_meeting_user` VALUES (258,27,43,3);
 /*!40000 ALTER TABLE `think_meeting_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -441,7 +506,7 @@ CREATE TABLE `think_node` (
   PRIMARY KEY (`id`),
   KEY `pid` (`pid`),
   KEY `status` (`is_del`)
-) ENGINE=InnoDB AUTO_INCREMENT=259 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=260 DEFAULT CHARSET=utf8;
 INSERT INTO `think_node` VALUES (84,'管理','User/index','fa fa-cogs','','','999',0,0,NULL);
 INSERT INTO `think_node` VALUES (91,'通讯录','Staff/index','fa fa-calendar bc-personal-schedule','','','9',198,0,'badge_sum');
 INSERT INTO `think_node` VALUES (94,'职位','Position/index',NULL,NULL,'','',1,0,NULL);
@@ -470,9 +535,9 @@ INSERT INTO `think_node` VALUES (227,'党员情况','PartyMember/index','fa fa-e
 INSERT INTO `think_node` VALUES (228,'党员心声','PartyMember/index','fa fa-envelope-o bc-mail','','','4',226,0,'badge_sum');
 INSERT INTO `think_node` VALUES (229,'工作动态','PartyWork/index','fa fa-envelope-o bc-mail','','','3',226,0,'badge_sum');
 INSERT INTO `think_node` VALUES (230,'议事大厅','','fa fa-envelope-o bc-mail','','','2',226,0,'badge_sum');
-INSERT INTO `think_node` VALUES (231,'支委议事厅','Meeting/list_type?type=ZWHY','fa fa-envelope-o bc-mail','','','1',230,0,'badge_sum');
-INSERT INTO `think_node` VALUES (232,'党小组议事厅','Meeting/list_type?type=DXZHY','fa fa-envelope-o bc-mail','','','2',230,0,'badge_sum');
-INSERT INTO `think_node` VALUES (233,'党员议事厅','Meeting/list_type?type=DYHY','fa fa-envelope-o bc-mail','','','3',230,0,'badge_sum');
+INSERT INTO `think_node` VALUES (231,'支委议事厅','Meeting/list_type##?type=ZWHY','fa fa-envelope-o bc-mail','MeetingFolder','','1',230,0,'badge_sum');
+INSERT INTO `think_node` VALUES (232,'党小组议事厅','Meeting/list_type##?type=DXZHY','fa fa-envelope-o bc-mail','MeetingFolder','','2',230,0,'badge_sum');
+INSERT INTO `think_node` VALUES (233,'党员议事厅','Meeting/list_type##?type=DYHY','fa fa-envelope-o bc-mail','MeetingFolder','','3',230,0,'badge_sum');
 INSERT INTO `think_node` VALUES (234,'教育管理','EducationManager/index','fa fa-file-o','','','2',0,0,'badge_sum');
 INSERT INTO `think_node` VALUES (235,'学习训练','StudyManager/index','fa fa-inbox','','','3',0,0,'badge_sum');
 INSERT INTO `think_node` VALUES (236,'舆情报告','SentimentManager/index','fa fa-cloud','','','4',0,0,'badge_sum');
@@ -486,9 +551,9 @@ INSERT INTO `think_node` VALUES (243,'政治教育','DocumentManager/index','fa 
 INSERT INTO `think_node` VALUES (244,'网络课堂','DocumentManager/index','fa fa-envelope-o bc-mail','','','3',235,0,'badge_sum');
 INSERT INTO `think_node` VALUES (245,'舆情上报','SentimentManager/index','fa fa-envelope-o bc-mail','','','1',236,0,'badge_sum');
 INSERT INTO `think_node` VALUES (246,'舆情查询','SentimentManager/index','fa fa-envelope-o bc-mail','','','2',236,0,'badge_sum');
-INSERT INTO `think_node` VALUES (247,'网络硬盘','OfficeManager/index','fa fa-envelope-o bc-mail','','','1',237,0,'badge_sum');
-INSERT INTO `think_node` VALUES (248,'信息发布','','fa fa-envelope-o bc-mail','','','2',237,0,'badge_sum');
-INSERT INTO `think_node` VALUES (249,'文典传输','OfficeManager/index','fa fa-envelope-o bc-mail','','','3',237,0,'badge_sum');
+INSERT INTO `think_node` VALUES (247,'网络硬盘','Doc/index##','fa fa-envelope-o bc-mail','DocFolder','','1',237,0,'badge_sum');
+INSERT INTO `think_node` VALUES (248,'信息发布','Info/index##','fa fa-envelope-o bc-mail','InfoFolder','','2',237,0,'badge_sum');
+INSERT INTO `think_node` VALUES (249,'文件传输','OfficeManager/index','fa fa-envelope-o bc-mail','','','3',237,0,'badge_sum');
 INSERT INTO `think_node` VALUES (250,'指令下达','CommandManager/index','fa fa-envelope-o bc-mail','','','1',238,0,'badge_sum');
 INSERT INTO `think_node` VALUES (251,'指令反馈','CommandManager/index','fa fa-envelope-o bc-mail','','','2',238,0,'badge_sum');
 INSERT INTO `think_node` VALUES (252,'会议管理','','','','','2',84,0,'');
@@ -498,6 +563,7 @@ INSERT INTO `think_node` VALUES (255,'我的签收','Info/my_sign','fa fa-envelo
 INSERT INTO `think_node` VALUES (256,'信息分类','Info/folder_manage','fa fa-envelope-o bc-mail','','','C1',248,0,'badge_sum');
 INSERT INTO `think_node` VALUES (257,'会议列表','Meeting/index','','','','1',252,0,'');
 INSERT INTO `think_node` VALUES (258,'类型管理','MeetType/index','','','','2',252,0,'');
+INSERT INTO `think_node` VALUES (259,'文档分类','Doc/folder_manage','fa fa-envelope-o bc-mail','','','1',247,0,'badge_sum');
 /*!40000 ALTER TABLE `think_node` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -598,152 +664,73 @@ CREATE TABLE `think_role_node` (
   `read` tinyint(1) DEFAULT NULL,
   `write` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-INSERT INTO `think_role_node` VALUES (2,136,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (2,135,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,94,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,97,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,98,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,99,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,69,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,6,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,2,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,7,NULL,NULL,NULL);
+INSERT INTO `think_role_node` VALUES (2,136,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,135,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,94,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,97,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,98,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,99,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,69,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,6,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,2,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,7,1,1,1);
 INSERT INTO `think_role_node` VALUES (1,131,1,1,1);
-INSERT INTO `think_role_node` VALUES (1,130,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,133,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,132,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,135,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,136,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,117,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,134,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (2,103,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (2,133,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (2,130,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (2,134,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (2,132,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (2,103,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (2,103,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (2,109,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,117,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,117,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,117,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,117,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,103,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,109,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,117,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,117,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,163,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,170,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,164,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,155,NULL,NULL,NULL);
+INSERT INTO `think_role_node` VALUES (1,130,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,133,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,132,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,135,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,136,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,117,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,134,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,103,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,133,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,130,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,134,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,132,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,103,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,103,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,109,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,117,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,117,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,117,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,117,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,103,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,109,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,117,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,117,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,163,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,170,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,164,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,155,1,1,1);
 INSERT INTO `think_role_node` VALUES (1,154,1,1,1);
-INSERT INTO `think_role_node` VALUES (1,111,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,168,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,162,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,166,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,161,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,171,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,165,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,174,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,172,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,173,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,160,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,175,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,176,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,167,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,128,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,225,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (2,226,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (2,227,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (2,230,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (2,231,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (2,232,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (2,233,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (2,229,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (2,228,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (2,234,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (2,239,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (2,240,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (2,241,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (2,235,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (2,242,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (2,243,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (2,244,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (2,236,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (2,245,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (2,237,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (2,247,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (2,248,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (2,249,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (2,238,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (2,251,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (2,198,1,1,1);
-INSERT INTO `think_role_node` VALUES (2,191,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (2,193,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (2,192,1,1,1);
-INSERT INTO `think_role_node` VALUES (2,125,1,1,1);
-INSERT INTO `think_role_node` VALUES (2,91,1,1,1);
-INSERT INTO `think_role_node` VALUES (7,226,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,227,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,230,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,231,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,232,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,233,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,229,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,228,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,234,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,239,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,240,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,241,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,235,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,242,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,243,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,244,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,236,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,245,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,246,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,237,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,247,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,248,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,249,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,238,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,250,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,251,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,198,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,191,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,193,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,192,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,125,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,91,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,84,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,110,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,115,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,123,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,122,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,153,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,116,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,252,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,112,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,118,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,119,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,120,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,205,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,206,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,113,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,121,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (7,114,NULL,NULL,NULL);
+INSERT INTO `think_role_node` VALUES (1,111,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,168,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,162,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,166,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,161,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,171,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,165,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,174,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,172,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,173,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,160,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,175,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,176,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,167,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,128,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,225,1,1,1);
 INSERT INTO `think_role_node` VALUES (1,226,1,1,1);
 INSERT INTO `think_role_node` VALUES (1,227,1,1,1);
 INSERT INTO `think_role_node` VALUES (1,230,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,231,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,232,NULL,NULL,NULL);
-INSERT INTO `think_role_node` VALUES (1,233,NULL,NULL,NULL);
+INSERT INTO `think_role_node` VALUES (1,231,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,232,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,233,1,1,1);
 INSERT INTO `think_role_node` VALUES (1,229,1,1,1);
 INSERT INTO `think_role_node` VALUES (1,228,1,1,1);
 INSERT INTO `think_role_node` VALUES (1,234,1,1,1);
 INSERT INTO `think_role_node` VALUES (1,239,1,1,1);
-INSERT INTO `think_role_node` VALUES (1,240,1,1,1);
 INSERT INTO `think_role_node` VALUES (1,241,1,1,1);
+INSERT INTO `think_role_node` VALUES (1,240,1,1,1);
 INSERT INTO `think_role_node` VALUES (1,235,1,1,1);
 INSERT INTO `think_role_node` VALUES (1,242,1,1,1);
 INSERT INTO `think_role_node` VALUES (1,243,1,1,1);
@@ -753,7 +740,8 @@ INSERT INTO `think_role_node` VALUES (1,245,1,1,1);
 INSERT INTO `think_role_node` VALUES (1,246,1,1,1);
 INSERT INTO `think_role_node` VALUES (1,237,1,1,1);
 INSERT INTO `think_role_node` VALUES (1,247,1,1,1);
-INSERT INTO `think_role_node` VALUES (1,248,NULL,NULL,NULL);
+INSERT INTO `think_role_node` VALUES (1,259,NULL,NULL,NULL);
+INSERT INTO `think_role_node` VALUES (1,248,1,1,1);
 INSERT INTO `think_role_node` VALUES (1,253,1,1,1);
 INSERT INTO `think_role_node` VALUES (1,254,NULL,NULL,NULL);
 INSERT INTO `think_role_node` VALUES (1,255,NULL,NULL,NULL);
@@ -787,6 +775,95 @@ INSERT INTO `think_role_node` VALUES (1,206,NULL,NULL,NULL);
 INSERT INTO `think_role_node` VALUES (1,113,NULL,NULL,NULL);
 INSERT INTO `think_role_node` VALUES (1,121,1,1,1);
 INSERT INTO `think_role_node` VALUES (1,114,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,226,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,227,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,230,NULL,NULL,NULL);
+INSERT INTO `think_role_node` VALUES (7,231,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,232,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,233,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,229,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,228,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,234,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,239,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,241,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,240,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,235,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,242,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,243,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,244,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,236,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,245,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,246,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,237,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,247,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,259,NULL,NULL,NULL);
+INSERT INTO `think_role_node` VALUES (7,248,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,253,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,254,NULL,NULL,NULL);
+INSERT INTO `think_role_node` VALUES (7,255,NULL,NULL,NULL);
+INSERT INTO `think_role_node` VALUES (7,256,NULL,NULL,NULL);
+INSERT INTO `think_role_node` VALUES (7,249,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,238,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,250,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,251,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,198,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,191,NULL,NULL,NULL);
+INSERT INTO `think_role_node` VALUES (7,192,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,193,NULL,NULL,NULL);
+INSERT INTO `think_role_node` VALUES (7,125,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,91,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,84,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,110,NULL,NULL,NULL);
+INSERT INTO `think_role_node` VALUES (7,115,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,123,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,122,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,153,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,116,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,252,NULL,NULL,NULL);
+INSERT INTO `think_role_node` VALUES (7,112,NULL,NULL,NULL);
+INSERT INTO `think_role_node` VALUES (7,118,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,119,NULL,NULL,NULL);
+INSERT INTO `think_role_node` VALUES (7,120,NULL,NULL,NULL);
+INSERT INTO `think_role_node` VALUES (7,205,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,206,NULL,NULL,NULL);
+INSERT INTO `think_role_node` VALUES (7,113,NULL,NULL,NULL);
+INSERT INTO `think_role_node` VALUES (7,121,1,1,1);
+INSERT INTO `think_role_node` VALUES (7,114,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,226,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,227,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,230,NULL,NULL,NULL);
+INSERT INTO `think_role_node` VALUES (2,231,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,232,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,233,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,229,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,228,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,234,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,239,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,241,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,240,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,235,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,242,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,243,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,244,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,236,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,245,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,237,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,247,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,259,NULL,NULL,NULL);
+INSERT INTO `think_role_node` VALUES (2,248,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,253,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,254,NULL,NULL,NULL);
+INSERT INTO `think_role_node` VALUES (2,255,NULL,NULL,NULL);
+INSERT INTO `think_role_node` VALUES (2,256,NULL,NULL,NULL);
+INSERT INTO `think_role_node` VALUES (2,249,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,238,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,251,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,198,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,191,NULL,NULL,NULL);
+INSERT INTO `think_role_node` VALUES (2,192,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,193,NULL,NULL,NULL);
+INSERT INTO `think_role_node` VALUES (2,125,1,1,1);
+INSERT INTO `think_role_node` VALUES (2,91,1,1,1);
 /*!40000 ALTER TABLE `think_role_node` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -851,7 +928,9 @@ CREATE TABLE `think_system_folder` (
   `is_del` tinyint(3) NOT NULL DEFAULT '0',
   `remark` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='信息功能中使用';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='信息功能中使用';
+INSERT INTO `think_system_folder` VALUES (1,0,'Info','通知公告','管理员/训练参谋|admin;','管理员/训练参谋|admin;','管理员/训练参谋|admin;','1',0,'');
+INSERT INTO `think_system_folder` VALUES (2,0,'Doc','计算机学习资料','管理员/训练参谋|admin;','团长/训练参谋|1003;','团长/训练参谋|1003;民兵A/无职位|minbing001;民兵B/无职位|minbing002;','1',0,'');
 /*!40000 ALTER TABLE `think_system_folder` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -917,11 +996,11 @@ CREATE TABLE `think_user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `account` (`emp_no`)
 ) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8;
-INSERT INTO `think_user` VALUES (1,'admin','管理员','GLY','21232f297a57a5a743894a0e4a801fc3',1,5,2,'male','2013-09-18','0.0.0.0',2864,'emp_pic/1.jpeg','','','5086-2222-2222','12123123',1222907803,1426871280,0,'1231512315123',1);
+INSERT INTO `think_user` VALUES (1,'admin','管理员','GLY','21232f297a57a5a743894a0e4a801fc3',1,5,2,'male','2013-09-18','0.0.0.0',2880,'emp_pic/1.jpeg','','','5086-2222-2222','12123123',1222907803,1426871280,0,'1231512315123',1);
 INSERT INTO `think_user` VALUES (41,'2002','总监2002','ZJ','4ba29b9f9e5732ed33761840f4ba6c53',6,3,1,'male','2013-10-30','0.0.0.0',NULL,'','','行政，财务','','',1376896154,1407565312,1,NULL,1);
 INSERT INTO `think_user` VALUES (43,'minbing001','民兵A','MBA','21232f297a57a5a743894a0e4a801fc3',27,9,4,'female','0000-00-00','0.0.0.0',NULL,'emp_pic/43.jpeg','','销售','','',1381035116,1426873682,0,NULL,1);
-INSERT INTO `think_user` VALUES (44,'1001','首长','SC','b8c37e33defde51cf91e1e03e51657da',1,5,5,'male','0000-00-00','127.0.0.1',NULL,'emp_pic/44.jpeg','','全面管理','','138-1123-1234',1381502796,1426871395,0,NULL,1);
-INSERT INTO `think_user` VALUES (48,'1003','团长','TC','aa68c75c4a77c87f97fb686b2f068676',6,5,1,'female','0000-00-00','0.0.0.0',NULL,'','','销售，运营','','',1381503490,1426871427,0,NULL,1);
+INSERT INTO `think_user` VALUES (44,'1001','首长','SC','21232f297a57a5a743894a0e4a801fc3',1,5,5,'male','0000-00-00','127.0.0.1',NULL,'emp_pic/44.jpeg','','全面管理','','138-1123-1234',1381502796,1426871395,0,NULL,1);
+INSERT INTO `think_user` VALUES (48,'1003','团长','TC','21232f297a57a5a743894a0e4a801fc3',6,5,1,'female','0000-00-00','0.0.0.0',NULL,'','','销售，运营','','',1381503490,1426871427,0,NULL,1);
 INSERT INTO `think_user` VALUES (49,'minbing002','民兵B','MBB','21232f297a57a5a743894a0e4a801fc3',27,9,4,'female','2013-10-10','127.0.0.1',NULL,'','','','123','12312312',1391694170,1426873691,0,NULL,1);
 /*!40000 ALTER TABLE `think_user` ENABLE KEYS */;
 UNLOCK TABLES;

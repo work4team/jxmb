@@ -165,6 +165,9 @@ class PopupController extends HomeController {
         $this->actor();
     }
 
+    function selectspeak() {
+        $this->actor();
+    }
 	function avatar() {
 		$id = I('id');
 		$this -> assign("id", $id);

@@ -6,11 +6,8 @@
 /*  Comment : 071223 */
 /*                   */
 /*********************/
-
-header( "Content-Type:text/xml;charset=UTF-8" );
-require_once( "../inc/inc.php" );
 $fileName = trim( $_GET['fileName'] );
-$file_path = api_get_path( SYS_PATH )."meeting/upload/temp/".$fileName;
+$file_path = dirname(__FILE__) ."/upload/temp/".$fileName;
 if ( file_exists( $file_path ) )
 {
     unlink( $file_path );

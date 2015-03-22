@@ -5,6 +5,8 @@
 	<form method='post' id="form_data" name="form_data" enctype="multipart/form-data"  class="well form-horizontal">
 		<input type="hidden" id="join_user_id" name="join_user_id" value="{$vo.join_user_id}">
 		<input type="hidden" id="join_user_name" name="join_user_name" value="{$vo.join_user_name}">
+        <input type="hidden" id="speak_user_id" name="speak_user_id" value="{$vo.speak_user_id}">
+        <input type="hidden" id="speak_user_name" name="speak_user_name" value="{$vo.speak_user_name}">
         <input type="hidden" id="holder" name="holder" value="{$vo.holder}">
         <input type="hidden" id="holder_id" name="holder_id" value="{$vo.holder_id}">
 		<input type="hidden" id="ajax" name="ajax" value="0">
@@ -62,8 +64,25 @@
                 </select>
             </div>
         </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="location">演讲人员：</label>
+            <div class="col-sm-10">
+                <div id="speak_actor_wrap" class="inputbox">
+                    <a class="pull-right btn btn-link text-center" onclick="select_speak();"><i class="fa fa-user"></i> </a>
+                    <div class="wrap" >
+                        <span class="address_list"></span>
+						<span class="text" >
+							<input class="letter" type="text"  >
+						</span>
+                    </div>
+                    <div class="search dropdown ">
+                        <ul class="dropdown-menu"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
 		<div class="form-group">
-			<label class="col-sm-2 control-label" for="location">参会人员：</label>
+			<label class="col-sm-2 control-label" for="location">听众人员：</label>
 			<div class="col-sm-10">
 				<div id="actor_wrap" class="inputbox">
 					<a class="pull-right btn btn-link text-center" onclick="select_join();"><i class="fa fa-user"></i> </a>
@@ -98,6 +117,10 @@
 		function select_join() {
 			winopen("{:U('Popup/scope')}", 730, 574);
 		}
+
+        function select_speak() {
+            winopen("{:U('Popup/selectspeak')}", 730, 574);
+        }
         function select_holder() {
             winopen("{:U('Popup/selectsingleuser')}", 730, 574);
         }
@@ -112,6 +135,16 @@
 			$("#actor_wrap span.address_list span").each(function() {
 				$("#join_user_id").val($("#join_user_id").val() + $(this).attr("data") + ",");
 			});
+
+            $("#speak_user_name").val("");
+            $("#speak_actor_wrap span.address_list span").each(function() {
+                $("#speak_user_name").val($("#speak_user_name").val() + $(this).text().replace(';', '') + '|' + $(this).attr("data") + ";");
+            });
+
+            $("#speak_user_id").val("");
+            $("#speak_actor_wrap span.address_list span").each(function() {
+                $("#speak_user_id").val($("#speak_user_id").val() + $(this).attr("data") + ",");
+            });
 
             $("#holder_id").val("");
             $("#single_user span.address_list span").each(function() {

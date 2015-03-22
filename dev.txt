@@ -31,3 +31,6 @@ phpStorm: File>settings>PHP>servers
 打开浏览器，如果是用chrome或者Firefox可以找到对应的XDebug工具，工具的设置里的IDE KEY填上PHPSTORM。
 在phpStorm里打开监听，就是一个电话一样的按钮。
 在浏览器里打开XDebug工具，访问localhost，与phpStorm连接成功！
+
+
+UPDATE `jxmb_role_node` set `jxmb_role_node`.`admin` = 1 , `jxmb_role_node`.`read` = 1 , `jxmb_role_node`.`write` = 1 where 1=1;

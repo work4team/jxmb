@@ -6,17 +6,17 @@
 /*  Comment : 071223 */
 /*                   */
 /*********************/
-
-$debug = true;
-require_once( "../inc/inc.php" );
-$fileName = Database::escape_string( trim( $_GET['fileName'] ) );
-$sql = "delete from attachment where local_file_name='".$fileName."' and model_type='FILESHARE'";
-$rs = api_sql_query( $sql, __FILE__, 8 );
-if ( !$rs && $debug )
+require("dbInc.php");
+//$logfile = fopen("debug.txt", "w") or die("Unable to open file!");
+$fileName = mysql_real_escape_string( trim( $_GET['fileName'] ) );
+$sql = "delete from " .  $db_cfg['DB_PREFIX']  . "meet_attachment where local_file_name='".$fileName."' and model_type='FILESHARE'";
+$result=mysql_query($sql,$link);
+//fwrite($logfile, $sql);
+if ( !$result)
 {
-    error_log( "delete zlchat file -".$fileName." ERROR!", 0 );
+   error_log( "delfile -". $fileName." Failed!", 0 );
 }
-$file_path = api_get_path( SYS_PATH )."meeting/upload/".$fileName;
+$file_path = dirname(__FILE__) ."/upload/".$fileName;
 if ( file_exists( $file_path ) )
 {
     unlink( $file_path );

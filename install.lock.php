@@ -8,10 +8,12 @@ if (isset($_POST["install"])) {
 	$db_pass = $_POST["db_pass"];
 	$db_dbname = $_POST["db_dbname"];
 	$db_tag = $_POST["db_tag"];
+    $mediaServer = $_POST["mediaServer"];
 
 	$config_str = "<?php\n";
 	$config_str .= "return array(\n";
 	$config_str .= "        'URL_MODEL'=>0, // 如果你的环境不支持PATHINFO 请设置为3,\n";
+    $config_str .= "        'mediaServer'=>'" . $mediaServer . "',\n";
 	$config_str .= "        'DB_TYPE'=>'mysql',\n";
 	$config_str .= "        'DB_HOST'=>'" . $db_host . "',\n";
 	$config_str .= "        'DB_NAME'=>'" . $db_dbname . "',\n";
@@ -179,6 +181,12 @@ if (isset($_POST["install"])) {
 								<input type="text" name="db_tag" value="xiangmu_" class="form-control"/>
 							</div>
 						</div>
+                        <div class="form-group">
+                            <label class="control-label col-md-4" for="name">视频服务器：</label>
+                            <div class="col-md-8">
+                                <input type="text" name="mediaServer" value="rtmp://localhost" class="form-control"/>
+                            </div>
+                        </div>
 						<div>
 							<label class="control-label col-md-4" for="name"> </label>
 							<div class="col-md-8">

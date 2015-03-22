@@ -67,8 +67,8 @@
 					<span class="col-10"> 名称 </span>
 				</div>
 				<div class="pull-right">
-                    <span class="col-10  "> 主持人 </span>
-					<span class="col-10  "> 开始时间 </span>
+                    <span class="col-12  "> 主持人 </span>
+					<span class="col-15  "> 开始时间 </span>
 				</div>
 				<div class="auto">
 					主题
@@ -90,10 +90,10 @@
 									<span class="col-10"> {$vo.meet_name} </span>
 								</div>
 								<div class="pull-right">
-                                    <span class="col-10"> {$vo.holder}<eq name="vo.holder|strlen" value="0">
+                                    <span class="col-12"> {$vo.holder}<eq name="vo.holder|strlen" value="0">
                                         未知
                                     </eq> </span>
-									<span class="col-10 "> {$vo.start_time|substr=0,16} </span>
+									<span class="col-15 "> {$vo.start_time|substr=0,16} </span>
 								</div>
 								<div class="auto">
 									<a href="{:U('read','id='.$vo['id'])}" >{$vo.subject}

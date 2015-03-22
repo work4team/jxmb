@@ -317,7 +317,7 @@ class InfoController extends HomeController {
 	}
 
 	public function down() {
-		$this -> _down();
+        $this -> _down("");
 	}
 
 	private function _unread_info() {

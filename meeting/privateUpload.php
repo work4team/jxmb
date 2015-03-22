@@ -1,17 +1,14 @@
 <?php
-/*********************/
-/*                   */
-/*  Version : 5.1.0  */
-/*  Author  : RM     */
-/*  Comment : 071223 */
-/*                   */
-/*********************/
 
-$debug = true;
-header( "Content-Type:text/xml;charset=UTF-8" );
-header( "Cache-Control: no-store, no-cache, must-revalidate" );
-header( "Cache-Control: post-check=0, pre-check=0", false );
-require_once( "../inc/inc.php" );
+function getFileExt($file_name)
+{
+    while($dot = strpos($file_name, "."))
+    {
+        $file_name = substr($file_name, $dot+1);
+    }
+    return $file_name;
+}
+
 $uploadFileName = $_FILES['Filedata']['name'];
 $uploadFile = $_FILES['Filedata']['tmp_name'];
 $pos = strrpos( $uploadFileName, "." );
@@ -27,16 +24,15 @@ foreach ( $denied_files as $denied_file )
     }
     $is_allowed_upload = false;
     break;
-    break;
 }
 if ( $is_allowed_upload && is_uploaded_file( $uploadFile ) )
 {
     $extendType = getFileExt( $uploadFileName );
     $localFileName = trim( $_GET['fileName'] );
-    $localFile = api_get_path( SYS_PATH )."meeting/upload/temp/".$localFileName;
-    if ( !move_uploaded_file( $uploadFile, $localFile ) && $debug )
+    $localFile = dirname(__FILE__) ."/upload/temp/".$localFileName;
+    if ( !move_uploaded_file( $uploadFile, $localFile ) )
     {
-        error_log( "private zlchat uploadfile -".$localFileName." Failed!", 0 );
+        error_log( "private uploadfile -".$localFileName." Failed!", 0 );
     }
 }
 ?>
