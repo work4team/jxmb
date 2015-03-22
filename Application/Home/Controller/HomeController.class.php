@@ -86,9 +86,9 @@ class HomeController extends Controller {
 				//dump($child_menu);
 				$child_menu_id = rotate($child_menu);
 
+                $count = 0;
 				if (isset($child_menu_id['id'])) {
 					$child_menu_id = $child_menu_id['id'];
-					$count = 0;
 					foreach ($child_menu_id as $k1 => $v1) {
 						if (!empty($badge_count[$v1])) {
 							$count += $badge_count[$v1];
@@ -102,6 +102,9 @@ class HomeController extends Controller {
 			$total = $badge_count + $badge_sum;
 			$this -> assign('badge_count', $total);
 		}
+        //dump($node_list);
+        //dump($total);
+
 	}
 
 	/**列表页面 **/
