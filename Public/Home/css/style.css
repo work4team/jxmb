@@ -143,7 +143,7 @@ select {
 	}
 }
 
-border-right:1px solid #ccc;
+/*border-right:1px solid #ccc;*/
 .plan_box {
 	word-break: break-all;
 	float: left;
@@ -600,7 +600,7 @@ ul.tree_menu i {
 	background-color: #FFF position :relative;
 }
 .ul_table ul li.tbody:first-child {
-	border-top-width: 0
+	border-top-width: 0;
 }
 .ul_table ul li.tbody:last {
 	border-top-width: 1
@@ -1109,9 +1109,7 @@ ul.tree_menu i {
 	background-image: url('../img/back.jpg');
 	background-repeat: no-repeat;
 }
-.Public .well {
-	height: 462px;
-}
+
 .Public span.checkbox {
 	padding-left: 0px;
 	margin-left: 0px;
@@ -1176,7 +1174,7 @@ ul.tree_menu i {
 	border-bottom-style: solid;
 	border-right: none;
 	background: #fff;
-	border-bottom: }
+}
 
 	.Schedule .st-grid
 	{
@@ -1562,4 +1560,24 @@ ul.tree_menu i {
 	.col-sm-12 {
 		width: 100%
 	}
+}
+.img-header {
+    height: 100px;
+    weight: 100%;
+    background-image: url('../img/banner.jpg');
+    background-repeat: no-repeat;
+    background-color: #3498db;
+}
+.Public .well {
+    height: 300px;
+    /*background-color: transparent;*/
+    border: transparent;
+}
+
+.login-background{
+   /* background-color: #3498db;*/
+}
+.row-login{
+    margin-left: 0;
+    margin-right: 0;
 }
