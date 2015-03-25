@@ -323,7 +323,7 @@ class InfoController extends HomeController {
 	private function _unread_info() {
 
 		$map['is_del'] = array('eq', '0');
-		$map['create_time'] = array("egt", time() - 3600 * 24 * 30);
+		$map['create_time'] = array("egt", time() - c('NEW_INFO_INTERVAL'));
 
 		$user_id = get_user_id();
 		$where_scope['user_id'] = array('eq', $user_id);
@@ -351,7 +351,7 @@ class InfoController extends HomeController {
 		$folder_list = D("SystemFolder") -> get_authed_folder($user_id);
 
 		$where_readed['folder'] = array("in", $folder_list);
-		$where_readed['create_time'] = array("egt", time() - 3600 * 24 * 30);
+		$where_readed['create_time'] = array("egt", time() - C('NEW_INFO_INTERVAL'));
 
 		$readed_list = array_filter(explode(",", get_user_config("readed_info") . "," . $id));
 

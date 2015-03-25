@@ -186,7 +186,7 @@ function badge_count_info($id) {
 	$model = D("InfoView");
 	$map['is_del'] = array('eq', '0');
 	$map['folder'] = array('eq', $id);
-	$map['create_time'] = array("egt", time() - 3600 * 24 * 30);
+	$map['create_time'] = array("egt", time() - C('NEW_INFO_INTERVAL'));
 
 	$user_id = get_user_id();
 	$where_scope['user_id'] = array('eq', $user_id);

@@ -1561,23 +1561,53 @@ ul.tree_menu i {
 		width: 100%
 	}
 }
+
 .img-header {
-    height: 100px;
+  /*
+   */
+    height: 70px;
     weight: 100%;
     background-image: url('../img/banner.jpg');
     background-repeat: no-repeat;
     background-color: #3498db;
+
 }
-.Public .well {
-    height: 300px;
-    /*background-color: transparent;*/
+
+.left-logo {
+    height: 50px;
+    width: 600px;
+    background-image: url('../img/banner.jpg');
+    background-repeat: no-repeat;
+    background-color: #3498db;
+}
+
+.login-well{
+    height: 500px;
+    background-color: transparent;
     border: transparent;
 }
 
-.login-background{
-   /* background-color: #3498db;*/
+.login-body{
+    background-color: #1883e5; /* */
 }
-.row-login{
-    margin-left: 0;
-    margin-right: 0;
+.login-div{
+    width: 1280px;
+}
+
+.login-td{
+    background-image: url('../img/back.jpg');
+    background-repeat:no-repeat;
+   /* position: absolute;*/
+}
+
+.logo-text {
+    font: bold 35px/100% "微软雅黑", "Lucida Grande", "Lucida Sans", Helvetica, Arial, Sans;
+    font-style: italic;
+    text-transform: uppercase;
+    /*
+    color: #000033;
+    text-shadow: #CCFFFF 2px 2px, #3399CC 4px 4px;
+    */
+    color: #fff;
+    text-shadow: 0 0 5px #ffd6cb, 0 0 10px #fffcb6, 0 0 15px #74bbff, 0 0 40px #38d3ff, 0 0 70px #3a9dff;
 }

@@ -33,4 +33,7 @@ return array(
 	'USER_AUTH_GATEWAY'=>'public/login',
     /* 系统数据加密设置 */
     'DATA_AUTH_KEY' => '1*NX+Jds|p!IFqltgD)"?4;ic<{,wuya239Ax^]-', //默认数据加密KEY
+
+    /*新消息-时间间隔设置*/
+    'NEW_INFO_INTERVAL' => 3600 * 24 * 1,//1天
 );
