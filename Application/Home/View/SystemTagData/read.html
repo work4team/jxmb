@@ -1,0 +1,65 @@
+<extend name="Layout/page_detail" />
+<literal><block name="content">
+	<input type="hidden" id="id" name="id" value="">
+	{:W('PageHeader/simple',array('name'=>$vo['name'],'search'=>'N'))}
+	<div class="operate panel panel-default">
+		<div class="panel-body">
+			<div class="pull-left">
+				<a onclick="go_return_url();" class="btn btn-sm btn-primary">返回</a>
+				<a onclick="del();" class="btn btn-sm btn-danger">删除</a>
+			</div>
+			<div class="pull-right">
+				<a onclick="edit();" class="btn btn-sm btn-primary">修改</a>
+			</div>
+		</div>
+	</div>
+	<form method='post' id="frm_content" name="frm_content" enctype="multipart/form-data"  class="well form-horizontal">
+		<input type="hidden" id="id" name="id" value="">
+        <div class="form-group col-sm-6">
+                <label class="col-sm-4 control-label">：</label>
+                <div class="col-sm-8">
+                    <p class="form-control-static">
+                        {$vo.}
+                    </p>
+                </div>
+            </div><div class="form-group col-sm-6">
+                <label class="col-sm-4 control-label">：</label>
+                <div class="col-sm-8">
+                    <p class="form-control-static">
+                        {$vo.}
+                    </p>
+                </div>
+            </div><div class="form-group col-sm-6">
+                <label class="col-sm-4 control-label">：</label>
+                <div class="col-sm-8">
+                    <p class="form-control-static">
+                        {$vo.}
+                    </p>
+                </div>
+            </div>	</form>
+</block>
+
+	<script type="text/javascript">
+		$(function() {
+			show_content();
+		});
+
+		function del() {
+			ui_confirm('确定要删除吗?', function() {
+                sendAjax("{:U('mark','action=del')}", 'id=' + $("#id").val(), function(data) {
+					if (data.status) {
+						ui_alert(data.info, function() {
+							go_return_url();
+						});
+					}
+				});
+			});
+		}
+
+		function edit() {
+        window.open(fix_url("{:U('edit')}?id=" + $("#id").val()), "_self");
+		}
+        $(document).ready(function() {
+
+        });
+	</script>

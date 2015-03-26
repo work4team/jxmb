@@ -48,7 +48,7 @@
 				<div class="text-center display-none">
 					当前头像：
 					<br />
-					<div><img class="current"  src="{:get_save_url()}{$pic}" />
+					<div><img class="current"  src="{$pic}" />
 					</div>
 				</div>
 				<div class="text-center">
@@ -87,9 +87,10 @@
 	FileUploaded: function(up,file,data) {
 	var myObject = eval('(' + data.response + ')');
 	if(myObject.status){
-	$("#img").val(myObject.path);
-	$("#target").attr("src",myObject.path);
-	$(".preview").attr("src",myObject.path);
+    var rpath =     SAVE_URL + myObject.path;
+	$("#img").val(rpath);
+	$("#target").attr("src",rpath);
+	$(".preview").attr("src",rpath);
 	$('#target').Jcrop({
 	minSize : [60, 60],
 	setSelect : [0, 0, 120, 120],
@@ -167,7 +168,7 @@ function checkCoords() {
 				dataType : "json",
 				success : function(msg) {
 					if (msg.result_code == 1) {
-						$("#emp_pic", parent.document).attr("src", "{:get_save_url()}" + msg.result_des + '?t=' + Math.random());
+						$("#emp_pic", parent.document).attr("src", msg.result_des + '?t=' + Math.random());
 						$("#pic", parent.document).val(msg.result_des);
 					}
 					myclose();

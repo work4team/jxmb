@@ -1565,10 +1565,9 @@ ul.tree_menu i {
 .img-header {
   /*
    */
-    height: 70px;
     weight: 100%;
-    background-image: url('../img/banner.jpg');
-    background-repeat: no-repeat;
+    /*background-image: url('../img/banner.jpg');*/
+    /*background-repeat: no-repeat;*/
     background-color: #3498db;
 
 }
@@ -1588,16 +1587,17 @@ ul.tree_menu i {
 }
 
 .login-body{
-    background-color: #1883e5; /* */
+    background-color: #0945aa; /* */
 }
 .login-div{
     width: 1280px;
 }
 
+
 .login-td{
     background-image: url('../img/back.jpg');
     background-repeat:no-repeat;
-   /* position: absolute;*/
+    /* position: absolute;*/
 }
 
 .logo-text {

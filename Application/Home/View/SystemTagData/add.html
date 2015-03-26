@@ -1,0 +1,43 @@
+<extend name="Layout/page_detail" />
+<block name="content">
+{:W('PageHeader/simple',array('name'=>'添加:'.$folder_name,'search'=>'N'))}
+
+	<form method='post' id="form_data" name="form_data" enctype="multipart/form-data"  class="well form-horizontal">
+		<input type="hidden" id="ajax" name="ajax" value="0">
+		<input type="hidden" id="opmode" name="opmode" value="add">
+
+        <div class="form-group">
+                <label class="col-sm-2 control-label" for="">*：</label>
+                <div class="col-sm-10">
+                    <input type="text" id="" name="" value="" class="form-control">
+                </div>
+            </div><div class="form-group">
+                <label class="col-sm-2 control-label" for="">*：</label>
+                <div class="col-sm-10">
+                    <input type="text" id="" name="" value="" class="form-control">
+                </div>
+            </div><div class="form-group">
+                <label class="col-sm-2 control-label" for="">*：</label>
+                <div class="col-sm-10">
+                    <input type="text" id="" name="" value="" class="form-control">
+                </div>
+            </div>
+		<div class="form-actions">
+			<input class="btn btn-sm btn-primary" type="button" value="保存" onclick="save();">
+			<input  class="btn btn-sm btn-default" type="button" value="取消" onclick="go_return_url();">
+		</div>
+	</form>
+</block>
+<block name="js">
+	<script type="text/javascript">
+		function save() {
+			window.onbeforeunload = null;
+			if (check_form("form_data")) {
+            sendForm("form_data", "{:U('save')}");
+			}
+		}
+        $(document).ready(function() {
+
+        });
+    </script>
+</block>
